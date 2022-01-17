@@ -1,20 +1,27 @@
 import type { NextPage } from 'next'
-import Link from 'next/link'
 import {useStore} from "../store/MainStore";
 import {observer} from "mobx-react";
+import {useRouter} from "next/dist/client/router";
+import {useUser} from "@auth0/nextjs-auth0";
+import {useEffect} from "react";
 
 const Home: NextPage = observer(() => {
-  const store = useStore();
+  const router = useRouter()
+  const { user, error, isLoading } = useUser();
+
+  useEffect(() => {
+    if(!isLoading) {
+      if(!user) {
+        location.replace("/api/auth/login");
+      } else {
+        router.push("/dashboard");
+      }
+    }
+  }, [isLoading])
 
   return (
-    <div>
-      <Link href="/api/jwt">
-        jwtv
-      </Link>
-      {
-        store.user.test
-      }
-    </div>
+    <>
+    </>
   )
 })
 
