@@ -1,15 +1,21 @@
 import type { NextPage } from 'next'
+import Link from 'next/link'
+import {useStore} from "../store/MainStore";
+import {observer} from "mobx-react";
 
-const Home: NextPage = () => {
-
+const Home: NextPage = observer(() => {
+  const store = useStore();
 
   return (
     <div>
-      <a href="/api/jwt">
+      <Link href="/api/jwt">
         jwtv
-      </a>
+      </Link>
+      {
+        store.user.test
+      }
     </div>
   )
-}
+})
 
 export default Home
