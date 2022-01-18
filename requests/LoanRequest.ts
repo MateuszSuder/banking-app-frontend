@@ -16,8 +16,8 @@ export interface LoanInfo {
 }
 
 export default class LoanRequest extends SimpleRequest {
-	constructor(token?: string) {
-		super(SERVICE.LOAN, token);
+	constructor(token?: string, code?: string) {
+		super(SERVICE.LOAN, token, code);
 	}
 
 	async loanInfo(): Promise<LoanInfo> {

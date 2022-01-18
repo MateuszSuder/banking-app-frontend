@@ -22,8 +22,8 @@ export interface Value {
 
 
 export default class StandingRequest extends SimpleRequest {
-	constructor(token?: string) {
-		super(SERVICE.STANDING_ORDER, token);
+	constructor(token?: string, code?: string) {
+		super(SERVICE.STANDING_ORDER, token, code);
 	}
 
 	async addStandingOrder(accountType: ACCOUNT_TYPE, input: TransferInput): Promise<StandingOrder[]> {

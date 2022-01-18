@@ -26,8 +26,8 @@ export interface ExchangeResult extends From {
 }
 
 export default class RateRequest extends SimpleRequest {
-	constructor(token?: string) {
-		super(SERVICE.RATE, token);
+	constructor(token?: string, code?: string) {
+		super(SERVICE.RATE, token, code);
 	}
 
 	async ratesInfo(): Promise<RateInfo[]> {

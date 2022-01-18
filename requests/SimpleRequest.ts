@@ -35,8 +35,9 @@ export default abstract class SimpleRequest {
 	private readonly baseURL = "http://localhost:8080/api";
 	private readonly serviceEndpoint: string;
 	private readonly accessToken?: string;
+	private readonly code?: string;
 
-	protected constructor(service: SERVICE, token: string | undefined) {
+	protected constructor(service: SERVICE, token: string | undefined, code: string | undefined) {
 		this.serviceEndpoint = service;
 		this.accessToken = token;
 	}
@@ -53,7 +54,7 @@ export default abstract class SimpleRequest {
 				paramString += "/" + p;
 			}
 		}
-		let url = new URL(this.fullURL + optional?.postParam ? (paramString + endpoint) : (endpoint + paramString));
+		let url = new URL(this.fullURL + (optional?.postParam ? (paramString + endpoint) : (endpoint + paramString)));
 		console.log(url);
 		const params = new URLSearchParams();
 		if (optional?.query) {
@@ -67,7 +68,7 @@ export default abstract class SimpleRequest {
 			headers: {
 				'Content-type': 'application/json',
 				'Authorization': `Bearer ${this.accessToken}`,
-				'X-Code': '957423'
+				'X-Code': `${this.code || ''}`
 			},
 			credentials: 'include',
 			body: JSON.stringify(optional?.body)

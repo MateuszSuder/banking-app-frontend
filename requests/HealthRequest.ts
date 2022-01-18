@@ -2,7 +2,7 @@ import SimpleRequest, {METHOD, SERVICE} from "./SimpleRequest";
 
 export default class HealthRequest extends SimpleRequest {
 	constructor() {
-		super(SERVICE.HEALTH);
+		super(SERVICE.HEALTH, undefined, undefined);
 	}
 
 	async checkHealth(): Promise<string> {

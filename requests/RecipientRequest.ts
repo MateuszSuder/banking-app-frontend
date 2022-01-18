@@ -7,8 +7,8 @@ export interface Recipient {
 }
 
 export default class RecipientRequest extends SimpleRequest {
-	constructor(token?: string) {
-		super(SERVICE.RECIPIENT, token);
+	constructor(token?: string, code?: string) {
+		super(SERVICE.RECIPIENT, token, code);
 	}
 
 	async addRecipient(accountType: ACCOUNT_TYPE, recipient: Recipient): Promise<Recipient[]> {

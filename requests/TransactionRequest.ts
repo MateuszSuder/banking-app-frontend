@@ -1,4 +1,4 @@
-import SimpleRequest, {SERVICE} from "./SimpleRequest";
+import SimpleRequest, {ACCOUNT_TYPE, METHOD, SERVICE} from "./SimpleRequest";
 
 export enum IOFilter {
 	ANY = 'ANY',
@@ -20,7 +20,7 @@ export enum SortType {
 	VALUE_DESC = 'VALUE_DESC'
 }
 
-export interface StandingOrderList {
+export interface TransactionListInput {
 	pagination:      Pagination;
 	ioFilter:        IOFilter;
 	startDate:       Date;
@@ -40,13 +40,43 @@ export interface Pagination {
 	limit:  number;
 }
 
+export interface TransactionPage {
+	transactions:     Transaction[];
+	paginationOutput: PaginationOutput;
+}
+
+export interface PaginationOutput {
+	count: number;
+}
+
+export interface Transaction {
+	from:            string;
+	receiverInfo:    ReceiverInfo;
+	title:           string;
+	sendValue:       SendValue;
+	transactionType: string;
+}
+
+export interface ReceiverInfo {
+	accountNumber: string;
+	recipientName: string;
+}
+
+export interface SendValue {
+	currency: string;
+	amount:   number;
+}
 
 export default class TransactionRequest extends SimpleRequest {
-	constructor(token?: string) {
-		super(SERVICE.TRANSACTION, token);
+	constructor(token?: string, code?: string) {
+		super(SERVICE.TRANSACTION, token, code);
 	}
 
-	async getTransactionPage() {
+	async getTransactionPage(accountType: ACCOUNT_TYPE, input: TransactionListInput): Promise<TransactionPage> {
+		return await (await this.request(METHOD.POST, '/', { body: input, param: [accountType.toString()] })).json()
+	}
 
+	async exportCSV(accountType: ACCOUNT_TYPE): Promise<String> {
+		return await (await this.request(METHOD.POST, '/', { param: [accountType.toString()] })).text()
 	}
 }

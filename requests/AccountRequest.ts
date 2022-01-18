@@ -72,8 +72,8 @@ export interface OpenAccountResult {
 }
 
 export default class AccountRequest extends SimpleRequest {
-	constructor(token?: string) {
-		super(SERVICE.ACCOUNT, token);
+	constructor(token?: string, code?: string) {
+		super(SERVICE.ACCOUNT, token, code);
 	}
 
 	async accountsInfo(): Promise<AccountInfo[]> {
