@@ -23,6 +23,7 @@ export type OptionalInputs = {
 	param?: Array<string>
 	cookie?: string;
 	code?: string;
+	postParam?: boolean;
 }
 
 export enum ACCOUNT_TYPE {
@@ -35,7 +36,7 @@ export default abstract class SimpleRequest {
 	private readonly serviceEndpoint: string;
 	private readonly accessToken?: string;
 
-	protected constructor(service: SERVICE, token?: string) {
+	protected constructor(service: SERVICE, token: string | undefined) {
 		this.serviceEndpoint = service;
 		this.accessToken = token;
 	}
@@ -52,7 +53,7 @@ export default abstract class SimpleRequest {
 				paramString += "/" + p;
 			}
 		}
-		let url = new URL(this.fullURL + endpoint + paramString);
+		let url = new URL(this.fullURL + optional?.postParam ? (paramString + endpoint) : (endpoint + paramString));
 		console.log(url);
 		const params = new URLSearchParams();
 		if (optional?.query) {
