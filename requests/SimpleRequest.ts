@@ -68,7 +68,6 @@ export default abstract class SimpleRequest {
 			}
 		}
 		url.search = params.toString();
-		console.log(this.code);
 		const r = await fetch(url.toString(), {
 			method: method,
 			headers: {

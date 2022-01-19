@@ -89,7 +89,7 @@ export default class AccountRequest extends SimpleRequest {
 	}
 
 	async transfer(accountType: ACCOUNT_TYPE, input: TransferInput): Promise<void> {
-		return await (await this.request(METHOD.GET, '/open', { param: [accountType.toString()], body: input })).json();
+		return await (await this.request(METHOD.POST, '/transfer', { param: [accountType.toString()], body: input })).json();
 	}
 
 }

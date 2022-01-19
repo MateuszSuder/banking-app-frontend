@@ -2,6 +2,7 @@ import type {NextPage} from 'next'
 import {observer} from "mobx-react";
 import {Button, Card, CardActions, CardContent, makeStyles, Typography} from "@material-ui/core";
 import {AccountInfo} from "../../requests/AccountRequest";
+import {useRouter} from "next/dist/client/router";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -22,6 +23,7 @@ type Props = {
 };
 export const AccountCard: (props: Props) => JSX.Element = observer((props: Props) => {
 	const classes = useStyles();
+	const router = useRouter();
 
 	return (
 		<Card className={classes.root} variant="outlined">
@@ -44,7 +46,7 @@ export const AccountCard: (props: Props) => JSX.Element = observer((props: Props
 						</div>
 					)
 				}
-				<Button variant="contained" color="primary" className={classes.transfer} >
+				<Button variant="contained" color="primary" className={classes.transfer} onClick={() => router.push('/transfer/' + (props.acc.id[11] == "1" ? 'standard' : 'multi'))} >
 					New transfer
 				</Button>
 			</CardContent>

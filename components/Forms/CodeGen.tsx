@@ -1,14 +1,9 @@
 import type {NextPage} from 'next'
 import {observer} from "mobx-react";
-import {makeStyles} from "@material-ui/core";
-import {useState} from "react";
+import {Button, makeStyles, TextField} from "@material-ui/core";
+import React, {useState} from "react";
 
 const useStyles = makeStyles((theme) => ({
-	container: {
-		display: "grid",
-		gridTemplateColumns: "2fr 1fr",
-		gap: theme.spacing(2)
-	}
 }));
 
 type Props = {
@@ -26,9 +21,9 @@ export const CodeGen: (props: Props) => JSX.Element = observer((props: Props) =>
 
 	return (
 		<>
-			<div className={classes.container}>
-				<input type="text" onChange={(v) => props.onChange(v.target.value)} value={props.model} />
-				<button onClick={sendCode}>Generate code</button>
+			<div className="code-container">
+				<TextField label="code" disabled onChange={(v) => props.onChange(v.target.value)} value={props.model} fullWidth />
+				<Button variant="contained" color="primary" onClick={sendCode}>Generate code</Button>
 			</div>
 			<p>{text}</p>
 		</>

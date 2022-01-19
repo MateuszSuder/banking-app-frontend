@@ -1,14 +1,16 @@
 import {makeAutoObservable} from "mobx";
-import {UserStore} from "./stores";
+import {UserStore, UtilStore} from "./stores";
 import {useMemo} from "react";
 
 let store: MainStore;
 
 export default class MainStore {
 	user: UserStore;
+	util: UtilStore;
 
 	constructor() {
 		this.user = new UserStore();
+		this.util = new UtilStore();
 		makeAutoObservable(this);
 	}
 }

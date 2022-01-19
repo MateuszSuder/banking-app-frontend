@@ -33,7 +33,8 @@ const useStyles = makeStyles((theme) => ({
 type Props = {
 	body: JSX.Element,
 	open: boolean,
-	closable: boolean
+	closable: boolean,
+	onClose?: (...args: any) => any
 };
 export const SimpleModal: (props: Props) => JSX.Element = observer((props: Props) => {
 	const classes = useStyles();
@@ -42,6 +43,7 @@ export const SimpleModal: (props: Props) => JSX.Element = observer((props: Props
 
 	const handleClose = () => {
 		setOpen(!props.closable || false);
+		props.onClose && props.onClose();
 	};
 
 	return (

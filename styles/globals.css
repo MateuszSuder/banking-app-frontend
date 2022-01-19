@@ -19,3 +19,19 @@ a {
     display: flex;
     justify-content: center;
 }
+
+.value {
+    display: grid;
+    grid-template-columns: 1fr 5fr;
+    gap: 1rem;
+}
+
+.transfer-form > * {
+    margin-bottom: 2rem !important;
+}
+
+.code-container {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 1rem
+}

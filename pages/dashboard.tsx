@@ -25,22 +25,12 @@ const useStyles = makeStyles((theme) => ({
 
 
 const Dashboard: NextPage = observer(() => {
-	const [noAccountModal, setNoAccountModal] = useState<boolean>(false);
 	const [history, setHistory] = useState<Transaction[]>([]);
 	const [multiHistory, setMultiHistory] = useState<Transaction[]>([]);
 
 	const store = useStore();
 
 	const classes = useStyles();
-
-	useEffect(() => {
-		fetch('api/account/info')
-			.then(res => res.json())
-			.then(data => {
-				setNoAccountModal(!data.length);
-				store.user.setAccounts(data);
-			})
-	}, [])
 
 	useEffect(() => {
 		if(store.user.userAccounts) {
@@ -52,6 +42,7 @@ const Dashboard: NextPage = observer(() => {
 							offset: 0,
 							limit: 10
 						},
+						sortType: "DATE_DESC",
 						ioFilter: "ANY",
 					})
 				}).then(res => res.json())
@@ -71,7 +62,7 @@ const Dashboard: NextPage = observer(() => {
 	return (
 		<div>
 			{
-				noAccountModal ? <SimpleModal closable={false} open={true} body={<NewAccountForm onSuccess={() => onCreated()} />} /> :
+				store.user.noAccount ? <SimpleModal closable={false} open={true} body={<NewAccountForm onSuccess={() => onCreated()} />} /> :
 					<div>
 						{
 							store.user.userAccounts && store.user.userAccounts.map(acc =>
