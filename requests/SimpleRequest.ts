@@ -31,6 +31,12 @@ export enum ACCOUNT_TYPE {
 	MULTI = 'multi'
 }
 
+export interface ErrorResponse {
+	message:         string;
+	message_details: string;
+	code:            number;
+}
+
 export default abstract class SimpleRequest {
 	private readonly baseURL = "http://localhost:8080/api";
 	private readonly serviceEndpoint: string;
@@ -40,14 +46,14 @@ export default abstract class SimpleRequest {
 	protected constructor(service: SERVICE, token: string | undefined, code: string | undefined) {
 		this.serviceEndpoint = service;
 		this.accessToken = token;
+		this.code = code;
 	}
 
 	protected get fullURL() {
 		return this.baseURL + "/" + this.serviceEndpoint;
 	}
 
-	protected async request(method: METHOD, endpoint: string, optional?: OptionalInputs) {
-		console.log(this.accessToken);
+	protected async request(method: METHOD, endpoint: string, optional?: OptionalInputs): Promise<Response> {
 		let paramString = '';
 		if(optional?.param) {
 			for(const p of optional.param) {
@@ -55,7 +61,6 @@ export default abstract class SimpleRequest {
 			}
 		}
 		let url = new URL(this.fullURL + (optional?.postParam ? (paramString + endpoint) : (endpoint + paramString)));
-		console.log(url);
 		const params = new URLSearchParams();
 		if (optional?.query) {
 			for (const q of optional.query) {
@@ -63,15 +68,22 @@ export default abstract class SimpleRequest {
 			}
 		}
 		url.search = params.toString();
-		return await fetch(url.toString(), {
+		console.log(this.code);
+		const r = await fetch(url.toString(), {
 			method: method,
 			headers: {
 				'Content-type': 'application/json',
 				'Authorization': `Bearer ${this.accessToken}`,
-				'X-Code': `${this.code || ''}`
+				'X-Code': `${this.code || undefined}`
 			},
 			credentials: 'include',
 			body: JSON.stringify(optional?.body)
 		})
+
+		if(r.ok) {
+			return r;
+		} else {
+			throw new Error(JSON.stringify(await r.json()));
+		}
 	}
 }

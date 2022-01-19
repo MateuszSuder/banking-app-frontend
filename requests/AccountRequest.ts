@@ -85,7 +85,7 @@ export default class AccountRequest extends SimpleRequest {
 	}
 
 	async openAccount(accountType: ACCOUNT_TYPE): Promise<OpenAccountResult> {
-		return await (await this.request(METHOD.GET, '/open', { param: [accountType.toString()] })).json();
+		return await (await this.request(METHOD.POST, '/open', { param: [accountType.toString()] })).json();
 	}
 
 	async transfer(accountType: ACCOUNT_TYPE, input: TransferInput): Promise<void> {

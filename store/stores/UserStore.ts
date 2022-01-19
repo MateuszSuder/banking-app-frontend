@@ -1,13 +1,14 @@
 import {makeAutoObservable} from "mobx";
+import {AccountInfo} from "../../requests/AccountRequest";
 
 export default class UserStore {
-	test = "123";
+	userAccounts?: AccountInfo[];
 
 	constructor() {
 		makeAutoObservable(this);
 	}
 
-	setTest() {
-		this.test = "abc";
+	setAccounts(accs: AccountInfo[]) {
+		this.userAccounts = accs;
 	}
 }

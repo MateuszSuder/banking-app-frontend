@@ -7,9 +7,10 @@ export default withApiAuthRequired(async function products(req, res) {
 		scopes: ['openid', 'profile', 'email']
 	});
 	const { accountType } = req.query;
+	const { code } = JSON.parse(req.body);
 	try {
-		const acc = new AccountRequest(accessToken);
-		const result = await acc.accountInfo(accountType as ACCOUNT_TYPE);
+		const acc = new AccountRequest(accessToken, code);
+		const result = await acc.openAccount(accountType as ACCOUNT_TYPE);
 		return res.status(200).json(result);
 	} catch(e: any) {
 		const parsed = JSON.parse(e.message);
