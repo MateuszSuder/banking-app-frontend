@@ -12,4 +12,8 @@ export default class UserStore {
 	setAccounts(accs: AccountInfo[]) {
 		this.userAccounts = accs;
 	}
+
+	get isMultiOpen() {
+		return this.userAccounts?.some(el => el.id[11] === '2')
+	}
 }
