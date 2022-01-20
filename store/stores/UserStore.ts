@@ -12,6 +12,17 @@ export default class UserStore {
 		this.userAccounts = accs;
 	}
 
+	getAccountWithType(type: string) {
+		if(type === 'standard') {
+			return this.standard
+		}
+		if(type === 'multi') {
+			return this.multi
+		}
+
+		throw new Error('Unknown type');
+	}
+
 	get isMultiOpen() {
 		return this.userAccounts?.some(el => el.id[11] === '2')
 	}

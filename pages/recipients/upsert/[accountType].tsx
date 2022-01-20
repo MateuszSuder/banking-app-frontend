@@ -9,6 +9,7 @@ import {
 	Typography
 } from "@material-ui/core";
 import CodeGen from "../../../components/Forms/CodeGen";
+import {useStore} from "../../../store/MainStore";
 
 type Props = {
 
@@ -18,11 +19,30 @@ export const AddRecipient: NextPage = observer((props: Props) => {
 	const [recipientIban, setRecipientIban] = useState('');
 	const [code, setCode] = useState('');
 	const router = useRouter();
+	const store = useStore();
 
 	const { accountType, id } = router.query;
 
 	const submit = () => {
-
+		fetch('/api/recipients/add/' + accountType, {
+			method: 'POST',
+			body: JSON.stringify({
+				accountNumber: recipientIban,
+				recipientName: recipientName,
+				code
+			})
+		})
+			.then(response => {
+				if(response.ok)
+					return response.json()
+				else throw response.json()
+			})
+			.then(d => {
+				const a = store.user.getAccountWithType('standard');
+			})
+			.catch(async e => {
+				console.error(e);
+			})
 	}
 
 	useEffect(() => {
