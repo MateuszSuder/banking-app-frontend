@@ -1,4 +1,5 @@
 import SimpleRequest, {ACCOUNT_TYPE, METHOD, SERVICE} from "./SimpleRequest";
+import {Recipient} from "./RecipientRequest";
 
 export interface TransferInput {
 	to:    To;
@@ -19,9 +20,10 @@ export interface Value {
 export interface AccountInfo {
 	id:             string;
 	currencies:     Currency[];
-	loans:          Loan[];
-	standingOrders: StandingOrder[];
-	alertsList:     AlertsList[];
+	loans?:          Loan[];
+	standingOrders?: StandingOrder[];
+	alertsList?:     AlertsList[];
+	savedRecipients?:Recipient[];
 }
 
 export interface AlertsList {

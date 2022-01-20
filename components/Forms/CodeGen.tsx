@@ -22,7 +22,7 @@ export const CodeGen: (props: Props) => JSX.Element = observer((props: Props) =>
 	return (
 		<>
 			<div className="code-container">
-				<TextField label="code" disabled onChange={(v) => props.onChange(v.target.value)} value={props.model} fullWidth />
+				<TextField label="code" onChange={(v) => props.onChange(v.target.value)} value={props.model} fullWidth />
 				<Button variant="contained" color="primary" onClick={sendCode}>Generate code</Button>
 			</div>
 			<p>{text}</p>

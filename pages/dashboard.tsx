@@ -62,7 +62,7 @@ const Dashboard: NextPage = observer(() => {
 	return (
 		<div>
 			{
-				store.user.noAccount ? <SimpleModal closable={false} open={true} body={<NewAccountForm onSuccess={() => onCreated()} />} /> :
+				store.util.noAccountModal ? <SimpleModal closable={false} open={true} body={<NewAccountForm type='standard' onSuccess={() => onCreated()} />} /> :
 					<div>
 						{
 							store.user.userAccounts && store.user.userAccounts.map(acc =>

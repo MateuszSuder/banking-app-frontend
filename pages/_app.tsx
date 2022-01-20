@@ -10,6 +10,7 @@ import {useRouter} from "next/dist/client/router";
 import {useStore} from "../store/MainStore";
 import SimpleModal from "../components/Modal/SimpleModal";
 import {observer} from "mobx-react";
+import NewAccountForm from "../components/Forms/NewAccountForm";
 
 const theme = createTheme({
   palette: {
@@ -27,7 +28,6 @@ const MyApp = observer(({ Component, pageProps }: AppProps) => {
   const store = useStore();
 
   useEffect(() => {
-    console.log("TEST");
     fetch('/api/account/info')
       .then(res => {
         if(res.ok)
@@ -35,19 +35,13 @@ const MyApp = observer(({ Component, pageProps }: AppProps) => {
         else throw res.json()
       })
       .then(data => {
-        console.log(data);
-        setNoAccountModal(!data.length);
         store.user.setAccounts(data);
+        store.util.noAccountModal = !Boolean(data.length)
       })
       .catch(e => {
-        console.log(e);
         location.replace('/api/auth/login')
       })
   }, [])
-
-  useEffect(() => {
-    console.log(store.util.modal);
-  }, [store.util.modal])
 
   return (
     <StateProvider>
@@ -56,6 +50,7 @@ const MyApp = observer(({ Component, pageProps }: AppProps) => {
           <Layout>
             <Component {...pageProps} />
             { store.util.modal && <SimpleModal body={<p>{store.util.modal}</p>} open={true} closable={true} onClose={() => store.util.modal = null} />}
+            { store.util.createMultiModal && <SimpleModal closable={false} open={true} body={<NewAccountForm type='multi' onSuccess={() => location.replace('/api/auth/login')}/>}/>}
           </Layout>
         </ThemeProvider>
       </UserProvider>

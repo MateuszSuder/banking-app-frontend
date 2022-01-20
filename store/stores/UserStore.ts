@@ -3,7 +3,6 @@ import {AccountInfo} from "../../requests/AccountRequest";
 
 export default class UserStore {
 	userAccounts?: AccountInfo[];
-	noAccount: boolean = false;
 
 	constructor() {
 		makeAutoObservable(this);
@@ -15,5 +14,13 @@ export default class UserStore {
 
 	get isMultiOpen() {
 		return this.userAccounts?.some(el => el.id[11] === '2')
+	}
+
+	get standard() {
+		return this.userAccounts?.find(el => el.id[11] === '1');
+	}
+
+	get multi() {
+		return this.userAccounts?.find(el => el.id[11] === '2');
 	}
 }

@@ -5,6 +5,7 @@ import {useState} from "react";
 
 type Props = {
 	onSuccess: () => void;
+	type: 'standard' | 'multi'
 }
 export const NewAccountForm: (props: Props) => JSX.Element = observer((props: Props) => {
 	const [code, setCode] = useState('');
@@ -12,7 +13,7 @@ export const NewAccountForm: (props: Props) => JSX.Element = observer((props: Pr
 
 	const submit = async () => {
 		setText('');
-		fetch('/api/account/open/standard', {
+		fetch('/api/account/open/' + props.type, {
 			method: 'POST',
 			body: JSON.stringify({
 				code
@@ -31,7 +32,10 @@ export const NewAccountForm: (props: Props) => JSX.Element = observer((props: Pr
 
 	return (
 		<div>
-			<p>Open your first account!</p>
+			{ props.type === 'standard' ?
+				<p>Open your first account!</p> :
+				<p>Open Multi-Currency account</p>
+			}
 			<CodeGen model={code} onChange={(val) => setCode(val)} />
 			<p style={{color: "red"}}>{text}</p>
 			<div className="center">

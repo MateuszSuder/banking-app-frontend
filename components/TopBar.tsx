@@ -40,13 +40,25 @@ export const TopBar: NextPage = observer(() => {
 
 	const Payments = [
 		<Typography align="center" variant="subtitle2" gutterBottom key={0}>Standard</Typography>,
-		<MenuItem onClick={handleClose} key={1}>New Transfer</MenuItem>,
-		<MenuItem onClick={handleClose} key={2}>Saved Recipients</MenuItem>,
+		<MenuItem onClick={() => {
+			handleClose();
+			router.push('/transfer/standard')
+		}} key={1}>New Transfer</MenuItem>,
+		<MenuItem onClick={() => {
+			handleClose();
+			router.push('/recipients/standard')
+		}} key={2}>Saved Recipients</MenuItem>,
 		<MenuItem onClick={handleClose} key={3}>Standing orders</MenuItem>,
 		<Typography align="center" variant="subtitle2" key={4}>Multi-Currency</Typography>,
-		<MenuItem onClick={handleClose} disabled={store.user.isMultiOpen} key={5}>Open multi-currency account</MenuItem>,
-		<MenuItem onClick={handleClose} key={6}>New Transfer</MenuItem>,
-		<MenuItem onClick={handleClose} key={7}>Saved Recipients</MenuItem>,
+		<MenuItem onClick={() => store.util.createMultiModal = true} disabled={store.user.isMultiOpen} key={5}>Open multi-currency account</MenuItem>,
+		<MenuItem onClick={() => {
+			handleClose();
+			router.push('/transfer/multi')
+		}} key={6}>New Transfer</MenuItem>,
+		<MenuItem onClick={() => {
+			handleClose();
+			router.push('/recipients/multi')
+		}} key={7}>Saved Recipients</MenuItem>,
 		<MenuItem onClick={handleClose} key={8}>Standing orders</MenuItem>
 	]
 

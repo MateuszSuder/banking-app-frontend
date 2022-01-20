@@ -4,13 +4,9 @@ import Modal from '@material-ui/core/Modal';
 import {makeStyles} from "@material-ui/core";
 import {useState} from "react";
 
-function rand() {
-	return Math.round(Math.random() * 20) - 10;
-}
-
 function getModalStyle() {
-	const top = 50 + rand();
-	const left = 50 + rand();
+	const top = 50;
+	const left = 50;
 
 	return {
 		top: `${top}%`,
@@ -28,6 +24,11 @@ const useStyles = makeStyles((theme) => ({
 		boxShadow: theme.shadows[5],
 		padding: theme.spacing(2, 4, 3),
 	},
+	modal: {
+		display: "flex",
+		justifyContent: "center",
+		alignItems: "center"
+	}
 }));
 
 type Props = {
@@ -53,8 +54,9 @@ export const SimpleModal: (props: Props) => JSX.Element = observer((props: Props
 				onClose={handleClose}
 				aria-labelledby="simple-modal-title"
 				aria-describedby="simple-modal-description"
+				className={classes.modal}
 			>
-				<div style={modalStyle} className={classes.paper}>
+				<div className={classes.paper}>
 					{props.body}
 				</div>
 			</Modal>
