@@ -48,7 +48,10 @@ export const TopBar: NextPage = observer(() => {
 			handleClose();
 			router.push('/recipients/standard')
 		}} key={2}>Saved Recipients</MenuItem>,
-		<MenuItem onClick={handleClose} key={3}>Standing orders</MenuItem>,
+		<MenuItem onClick={() => {
+			handleClose();
+			router.push('/standing/standard')
+		}} key={3}>Standing orders</MenuItem>,
 		<Typography align="center" variant="subtitle2" key={4}>Multi-Currency</Typography>,
 		<MenuItem onClick={() => store.util.createMultiModal = true} disabled={store.user.isMultiOpen} key={5}>Open multi-currency account</MenuItem>,
 		<MenuItem onClick={() => {
@@ -59,12 +62,15 @@ export const TopBar: NextPage = observer(() => {
 			handleClose();
 			router.push('/recipients/multi')
 		}} key={7}>Saved Recipients</MenuItem>,
-		<MenuItem onClick={handleClose} key={8}>Standing orders</MenuItem>
+		<MenuItem onClick={() => {
+			handleClose();
+			router.push('/standing/multi')
+		}} key={8}>Standing orders</MenuItem>
 	]
 
 	const Finances = [
 		<MenuItem onClick={handleClose} key={1}>Transactions</MenuItem>,
-		<MenuItem onClick={handleClose} key={2}>Loans</MenuItem>,
+		<MenuItem onClick={handleClose} key={2}>Loan</MenuItem>,
 	]
 
 	const router = useRouter();

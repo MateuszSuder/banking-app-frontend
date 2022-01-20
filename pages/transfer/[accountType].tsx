@@ -10,7 +10,7 @@ import {
 	makeStyles,
 	MenuItem,
 	Select,
-	TextField
+	TextField, Typography
 } from "@material-ui/core";
 import {useRouter} from "next/dist/client/router";
 import {useStore} from "../../store/MainStore";
@@ -43,7 +43,7 @@ export const TopBar: NextPage = observer(() => {
 	const router = useRouter();
 	const store = useStore();
 
-	const { accountType } = router.query;
+	const { accountType, id } = router.query;
 
 	const submit = () => {
 		fetch('/api/transfer/' + type, {
@@ -76,8 +76,8 @@ export const TopBar: NextPage = observer(() => {
 	}
 
 	useEffect(() => {
-		console.log(store.util.modal);
-	}, [store.util.modal])
+		setRecipientIban(id as string)
+	}, [id])
 
 	useEffect(() => {
 		if(accountType && !['standard', 'multi'].includes(accountType as string)) {
@@ -101,8 +101,9 @@ export const TopBar: NextPage = observer(() => {
 	return (
 		<div>
 			<form className="transfer-form" noValidate>
+				<Typography align="center" variant="h4" gutterBottom>Transfer</Typography>
 				<TextField label="From" disabled value={from}fullWidth />
-				<TextField label="Recipient IBAN" value={recipientIban} onChange={e => setRecipientIban(e.target.value)}  fullWidth />
+				<TextField label="Recipient IBAN" disabled={Boolean(id)} value={recipientIban} onChange={e => setRecipientIban(e.target.value)}  fullWidth />
 				<TextField label="Recipient name" value={recipientName} onChange={e => setRecipientName(e.target.value)} fullWidth />
 				<TextField label="Title" value={title} onChange={e => setTitle(e.target.value)} fullWidth />
 				<div className={"value"}>
