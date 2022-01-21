@@ -38,4 +38,14 @@ a {
 
 .filter-form {
     display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.filter-form > * {
+    display: grid;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    margin-bottom: 1rem;
+
+
 }
