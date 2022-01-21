@@ -73,7 +73,10 @@ export const TopBar: NextPage = observer(() => {
 			handleClose();
 			router.push('/transactions')
 		}} key={1}>Transactions</MenuItem>,
-		<MenuItem onClick={handleClose} key={2}>Loan</MenuItem>,
+		<MenuItem onClick={() => {
+			handleClose();
+			router.push('/loan')
+		}} key={2}>Loan</MenuItem>,
 	]
 
 	const router = useRouter();

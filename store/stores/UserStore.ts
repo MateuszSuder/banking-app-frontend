@@ -1,5 +1,5 @@
 import {makeAutoObservable} from "mobx";
-import {AccountInfo} from "../../requests/AccountRequest";
+import {AccountInfo, Loan} from "../../requests/AccountRequest";
 
 export default class UserStore {
 	userAccounts?: AccountInfo[];
@@ -33,5 +33,19 @@ export default class UserStore {
 
 	get multi() {
 		return this.userAccounts?.find(el => el.id[11] === '2');
+	}
+
+	get hasActiveLoan(): boolean {
+		if(!this.standard?.loans) {
+			return false;
+		}
+		return this.standard.loans[this.standard.loans.length - 1].interest > 0 ||
+			this.standard.loans[this.standard.loans.length - 1].installments[this.standard.loans[this.standard.loans.length - 1].installments.length - 1].amountLeftToPay > 0
+	}
+
+	get getLastLoan(): Loan | undefined {
+		if(this.standard?.loans) {
+			return this.standard.loans[this.standard.loans.length - 1];
+		}
 	}
 }

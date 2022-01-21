@@ -5,10 +5,9 @@ export default withApiAuthRequired(async function products(req, res) {
 	const { accessToken } = await getAccessToken(req, res, {
 		scopes: ['openid', 'profile', 'email']
 	});
-	const { code, ...rest } = JSON.parse(req.body);
 	try {
-		const loan = new LoanRequest(accessToken, code);
-		const result = await loan.payLoan(rest);
+		const loan = new LoanRequest(accessToken);
+		const result = await loan.loanInfo();
 		return res.status(200).json(result);
 	} catch(e: any) {
 		console.log(e);

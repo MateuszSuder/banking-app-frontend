@@ -51,7 +51,7 @@ export interface Installment {
 	id:              string;
 	amount:          number;
 	amountLeftToPay: number;
-	paidAt:          string;
+	paymentDay:      string;
 }
 
 export interface StandingOrder {
