@@ -65,7 +65,11 @@ export const TopBar: NextPage = observer(() => {
 		<MenuItem onClick={() => {
 			handleClose();
 			router.push('/standing/multi')
-		}} key={8}>Standing orders</MenuItem>
+		}} key={8}>Standing orders</MenuItem>,
+		<MenuItem onClick={() => {
+			handleClose();
+			router.push('/exchange')
+		}} key={9}>Exchange</MenuItem>
 	]
 
 	const Finances = [

@@ -1,6 +1,6 @@
 import type {NextPage} from 'next'
 import {observer} from "mobx-react";
-import {DataGrid, GridRowModel} from '@material-ui/data-grid';
+import {DataGrid} from '@material-ui/data-grid';
 import {Button, Divider, InputLabel, MenuItem, Select, TextField, Typography} from "@material-ui/core";
 import React, {useEffect, useState} from "react";
 import {IOFilter, SortType, Transaction, TransactionType} from "../../requests/TransactionRequest";
@@ -80,7 +80,7 @@ export const Transactions: NextPage = observer(() => {
 		count: 0
 	});
 
-	const [filters, setFilters] = useState<Filters>({ioFilter: IOFilter.ANY});
+	const [filters, setFilters] = useState<Filters>({ioFilter: IOFilter.ANY, sortType: SortType.DATE_DESC});
 	const [accountType, setAccountType] = useState<'standard' | 'multi'>('standard');
 
 	const store = useStore();

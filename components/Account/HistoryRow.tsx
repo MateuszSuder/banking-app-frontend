@@ -45,7 +45,7 @@ export const HistoryRow: (props: Props) => JSX.Element = observer((props: Props)
 			{expand && <div>
 	      <div>From: {props.transaction.from}</div>
 				{props.transaction.from === props.iban && <div>Title: {props.transaction.title}</div>}
-	      <div>Receiver iban: {props.transaction.receiverInfo.recipientName}</div>
+	      <div>Receiver iban: {props.transaction.receiverInfo.accountNumber}</div>
 	      <div>Receiver name: {props.transaction.receiverInfo.recipientName}</div>
 	      <div>Value: {props.transaction.sendValue.amount}{props.transaction.sendValue.currency}</div>
 		  </div>}
