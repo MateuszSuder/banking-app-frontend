@@ -77,6 +77,6 @@ export default class TransactionRequest extends SimpleRequest {
 	}
 
 	async exportCSV(accountType: ACCOUNT_TYPE): Promise<String> {
-		return await (await this.request(METHOD.POST, '/', { param: [accountType.toString()] })).text()
+		return await (await this.request(METHOD.GET, '/export', { param: [accountType.toString()], postParam: true })).text()
 	}
 }

@@ -1,10 +1,13 @@
 import type {NextPage} from 'next'
 import {observer} from "mobx-react";
 import {DataGrid} from '@material-ui/data-grid';
-import {Button, Divider, InputLabel, MenuItem, Select, TextField, Typography} from "@material-ui/core";
+import {Button, Divider, InputLabel, makeStyles, MenuItem, Select, TextField, Typography} from "@material-ui/core";
 import React, {useEffect, useState} from "react";
 import {IOFilter, SortType, Transaction, TransactionType} from "../../requests/TransactionRequest";
 import {useStore} from "../../store/MainStore";
+import SimpleModal from "../../components/Modal/SimpleModal";
+import CodeGen from "../../components/Forms/CodeGen";
+import Modal from "@material-ui/core/Modal";
 
 type Row = {
 	id: number,
@@ -70,6 +73,22 @@ const columns = [
 	},
 ];
 
+const useStyles = makeStyles((theme) => ({
+	paper: {
+		position: 'absolute',
+		width: 400,
+		backgroundColor: theme.palette.background.paper,
+		border: '2px solid #000',
+		boxShadow: theme.shadows[5],
+		padding: theme.spacing(2, 4, 3),
+	},
+	modal: {
+		display: "flex",
+		justifyContent: "center",
+		alignItems: "center"
+	}
+}));
+
 
 export const Transactions: NextPage = observer(() => {
 	const [rowsState, setRowsState] = useState<RowsState>({
@@ -82,8 +101,38 @@ export const Transactions: NextPage = observer(() => {
 
 	const [filters, setFilters] = useState<Filters>({ioFilter: IOFilter.ANY, sortType: SortType.DATE_DESC});
 	const [accountType, setAccountType] = useState<'standard' | 'multi'>('standard');
+	const [code, setCode] = useState("");
+	const [modalOpen, setModalOpen] = useState(false);
 
 	const store = useStore();
+	const classes = useStyles();
+
+	const exportCSV = (type: string) => {
+		if(code) {
+			fetch(`/api/transactions/export`, {
+				method: "POST",
+				body: JSON.stringify({
+					accountType: type,
+					code
+				})
+			})
+				.then(r => {
+					if (r.ok) return r.text();
+					throw r.json();
+				})
+				.then(d => {
+					let newBlob = new Blob([d], {type: "text/csv"});
+					const data = window.URL.createObjectURL(newBlob);
+					const link = document.createElement('a');
+					link.href = data;
+					link.download="file.csv";
+					link.click();
+				})
+				.catch(async e => {
+
+				});
+		}
+	}
 
 	const filter = async () => {
 		setRowsState({
@@ -137,7 +186,8 @@ export const Transactions: NextPage = observer(() => {
 	return (
 		<>
 			<Typography variant="h6" align="center" gutterBottom>Transactions</Typography>
-			<Divider style={{marginBottom: "2rem"}} />
+			<Divider style={{marginBottom: "1rem"}} />
+			<Typography variant="body2" color="primary" align="right" style={{marginBottom: "1rem", cursor: "pointer"}} gutterBottom onClick={() => setModalOpen(true)}>Export all as CSV</Typography>
 			<form noValidate className="filter-form">
 				<div>
 					<InputLabel id="ioFilter">Incoming/Outgoing</InputLabel>
@@ -291,6 +341,20 @@ export const Transactions: NextPage = observer(() => {
 					loading={rowsState.loading}
 				/>
 			</div>
+			<Modal
+				open={modalOpen}
+				onClose={() => setModalOpen(false)}
+				aria-labelledby="simple-modal-title"
+				aria-describedby="simple-modal-description"
+				className={classes.modal}
+			>
+				<div className={classes.paper}>
+					<CodeGen model={code} onChange={v => setCode(v)} />
+					<Button variant="contained" color="primary" onClick={() => exportCSV('standard')}>Export standard</Button>
+					<p />
+					<Button variant="contained" color="primary" onClick={() => exportCSV('multi')}>Export multi-currency</Button>
+				</div>
+			</Modal>
 		</>
 	);
 });
