@@ -69,7 +69,10 @@ export const TopBar: NextPage = observer(() => {
 	]
 
 	const Finances = [
-		<MenuItem onClick={handleClose} key={1}>Transactions</MenuItem>,
+		<MenuItem onClick={() => {
+			handleClose();
+			router.push('/transactions')
+		}} key={1}>Transactions</MenuItem>,
 		<MenuItem onClick={handleClose} key={2}>Loan</MenuItem>,
 	]
 
