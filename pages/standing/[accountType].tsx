@@ -73,6 +73,7 @@ export const StandingOrdersList: NextPage = observer((props: Props) => {
 			} else if(accountType === 'multi' && store.user.multi?.standingOrders) {
 				setStandingOrders(store.user.multi.standingOrders)
 			} else {
+				setStandingOrders([]);
 				if(!['standard', 'multi'].includes(accountType as string)) {
 					router.push('/dashboard')
 				}
@@ -82,7 +83,7 @@ export const StandingOrdersList: NextPage = observer((props: Props) => {
 
 	useEffect(() => {
 		prepareStandingOrders();
-	}, [store.user.userAccounts])
+	}, [store.user.userAccounts, accountType])
 
 	return (
 		<div style={{width: "100%"}}>
