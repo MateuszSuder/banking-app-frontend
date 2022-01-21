@@ -81,7 +81,7 @@ export const RecipientsList: NextPage = observer((props: Props) => {
 
 	useEffect(() => {
 		prepareRecipients();
-	}, [store.user.userAccounts])
+	}, [store.user.userAccounts, accountType])
 
 	return (
 		<div style={{width: "100%"}}>
