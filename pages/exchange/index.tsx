@@ -40,8 +40,11 @@ export const Exchange: NextPage = observer((props: Props) => {
 			const def = rates.find(el => el.defaultCurrency === inputCurrency);
 
 			if(def) {
-				const rate = def.rates.find(el => el.currency === outputCurrency)!.price;
-				setCalculated((parseInt(inputAmount) / rate).toFixed(2));
+				const rate = def.rates.find(el => el.currency === outputCurrency);
+				if(rate) {
+					setCalculated((parseInt(inputAmount) / rate.price).toFixed(2));
+				}
+
 			}
 		}
 	}
