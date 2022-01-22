@@ -262,7 +262,7 @@ export const Loan: NextPage = observer(() => {
 					</Grid>
 					<Grid item xs={4}>
 						<Typography variant="body1" align="center">
-							Payment day: {new Date(installment.paymentDay).getDate() + "-" + new Date(installment.paymentDay).getMonth() + "-" + new Date(installment.paymentDay).getFullYear() || '-'}
+							Payment day: {new Date(installment.paymentDay).getDate() + "-" + (new Date(installment.paymentDay).getMonth() + 1) + "-" + new Date(installment.paymentDay).getFullYear() || '-'}
 						</Typography>
 					</Grid>
 				</Grid>
