@@ -185,7 +185,7 @@ export const Loan: NextPage = observer(() => {
 							id="amount"
 							value={amount}
 							onChange={e => setAmount(parseInt(e.target.value))}
-							startAdornment={<InputAdornment position="start">$</InputAdornment>}
+							startAdornment={<InputAdornment position="start">PLN</InputAdornment>}
 							type="number"
 						/>
 					</Grid>
